@@ -1,0 +1,2138 @@
+<wsdl:definitions xmlns:plnk="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+                  xmlns:errors="http://xmlns.oracle.com/adf/svc/errors/"
+                  xmlns:orafault="http://xmlns.oracle.com/oracleas/schema/oracle-fault-11_0"
+                  xmlns:tns="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:types="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/types/"
+                  name="ErpIntegrationService"
+                  targetNamespace="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/">
+    <wsdl:documentation xmlns:oer="http://xmlns.oracle.com/oer">
+        <name>ERP Integration Service</name>
+        <description>provides external web service operations for ERP integration scenarios.</description>
+        <docCategories>
+            <category>External</category>
+        </docCategories>
+        <oer:lifecycle>Active</oer:lifecycle>
+        <oer:compatibility>Supported - Backward Compatibility Assured</oer:compatibility>
+        <oer:operation name="getESSJobStatus">
+            <description>Obtains the request status of the submitted ESS job.</description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="requestId" description="The request ID of the submitted ESS job."/>
+                <oer:return description="Returns the current status of the ESS job."/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="getDfltObjAttrHints">
+            <description>An operation to retrieve user interface hints, such as the service data object label and object
+                attribute labels, for the specified service data object and locale. As a prerequisite, invoke the
+                getEntityList operation defined on this service to get the list of possible values for the viewName
+                request payload element.
+            </description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="viewName"
+                               description="The service view usage name, an internal name for the service data object. Specify the value of the name element from the getEntityList operation response payload."/>
+                <oer:parameter name="localeName"
+                               description="The locale to use when evaluating locale-based user interface hints. The localeName is in ISO 639-1 format."/>
+                <oer:return
+                        description="The label and user interface hints for the specified service data object and its attributes in a name-value pair format"/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="getServiceLastUpdateTime">
+            <description>An operation that returns the date and time when the schema files referenced in the service
+                definition last changed.
+            </description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:return
+                        description="The date and time when the service definition last changed in ISO 8601 format."/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="getEntityList">
+            <description>An operation to get the list of service data objects defined on this service.</description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:return
+                        description="A list of service data objects defined on this service. For each service data object, the result includes the QName, internal name, and Boolean values indicating whether create, update, merge, and delete operations can be performed on the object."/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="submitESSJobRequest">
+            <description>Submits an ESS job request for the specified job definition.</description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="jobPackageName"
+                               description="The ESS job package name for the ESS job that must be submitted."/>
+                <oer:parameter name="jobDefinitionName"
+                               description="The ESS job definition name for the ESS job that must be submitted."/>
+                <oer:parameter name="paramList"
+                               description="List of parameters used to invoke the ESS job. The order of the parameters is maintained as per the list. The corresponding entry in the list should be blank when a given parameter is not passed."/>
+                <oer:return description="Returns the request ID of the submitted ESS job."/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="submitJobWithOutput">
+            <description>Submits an ESS job to export and uploads the job output to the Universal Content Management
+                server.
+            </description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="jobPackageName"
+                               description="The ESS job package name for the ESS job that must be submitted."/>
+                <oer:parameter name="jobDefinitionName"
+                               description="The ESS job definition name for the ESS job that must be submitted."/>
+                <oer:parameter name="callbackURL"
+                               description="The callback URL of the service implemented by the customers to receive the ESS job status on job completion."/>
+                <oer:parameter name="paramList"
+                               description="List of parameters used to invoke the ESS job. The order of the parameters is maintained as per the list. The corresponding entry in the list should be blank when a given parameter is not passed."/>
+                <oer:return description="Returns the request ID of the submitted ESS job."/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="getDocumentIdsForFilePrefix">
+            <description>Gets the document identifiers for files that match the file prefix and specified account. These
+                files do not contain the specified comments.
+            </description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="prefix"
+                               description="The file prefix used to search for the files that start with a specificed prefix."/>
+                <oer:parameter name="account"
+                               description="The account parameter used to search for the files that belongs to a specified security account."/>
+                <oer:parameter name="comments"
+                               description="The parameter is used to pass the comments. Files that do not have the comments are retreived."/>
+                <oer:return description="Returns a list of document Identifiers."/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="getDocumentForDocumentId">
+            <description>The operation is used to get the document that matches the given Document Identifier
+            </description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="DocumentId" description="The numeric document identifier of a file."/>
+                <oer:return
+                        description="Returns a list of elements, each containing the details of the downloaded files. The details include the document ID, file content, file name, content type, file title, author, security group, and account."/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="getDocumentsForFilePrefix">
+            <description>Gets the files that match the file prefix and specified account. These files do not contain the
+                specified comments.
+            </description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="prefix"
+                               description="The file prefix used to search for the files that start with a specificed prefix."/>
+                <oer:parameter name="account"
+                               description="The account parameter used to search for the files that belongs to a specified security account."/>
+                <oer:parameter name="comments" description="The comments that are not present in the files."/>
+                <oer:return
+                        description="Returns a list of elements, each containing the details of the downloaded files. The details include the document ID, file content, file name, content type, file title, author, security group, and account."/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="uploadFileToUcm">
+            <description>Uploads a file to the Universal Content Management server based on the document specified.
+            </description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="document"
+                               description="List of elements, each containing the details of the file to be uploaded. The details include the file content, file name, content type, file title, author, security group, and account."/>
+                <oer:return description="Returns the document ID of the uploaded file."/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="downloadESSJobExecutionDetails">
+            <description>Downloads the ESS job output and the logs as a zip file.</description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="requestId" description="The request ID of the submitted ESS job."/>
+                <oer:parameter name="fileType"
+                               description="The file type used to determine the execution details to download. Specify the file type as log to download the log file. Specify the file type as out to download the output file. Download both the log files and output files when file type is specified as all or when no file type is specified."/>
+                <oer:return
+                        description="Returns a list of elements, each containing the details of the downloaded files. The details include the document ID, file content, file name, content type, file title, author, security group, and account."/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="appendFileComment">
+            <description>Appends the specified comments to a file.</description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="documentId" description="The numeric document identifier of a file."/>
+                <oer:parameter name="comments" description="Appends the specified comments to a file."/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="downloadExportOutput">
+            <description>The method downloads the output of ESS job</description>
+            <oer:lifecycle>Deprecated</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="requestId"
+                               description="The parameter is used to pass the request id of the ESS job."/>
+                <oer:return description="The list of document details for the document is returned"/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="loadAndImportData">
+            <description>Uploads a file to the Oracle Universal Content Management server based on the document
+                specified and submits the ESS jobs to import and process the uploaded file.
+            </description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="document"
+                               description="List of elements, each containing the details of the file to be uploaded. The details include the file content, file name, content type, file title, author, security group, and account."/>
+                <oer:parameter name="jobList"
+                               description="List of elements, each containing the details of the ESS job to be submitted to import and process the uploaded file. The details include the job definition name, job package name, and list of parameters."/>
+                <oer:parameter name="interfaceDetails" description="The interface whose data is to be loaded."/>
+                <oer:parameter name="notificationCode"
+                               description="Two digit code representing the type and when a notification is to be sent"/>
+                <oer:parameter name="callbackURL"
+                               description="The callback URL of the service implemented by the customers to receive the ESS job status on job completion."/>
+                <oer:return description="Returns response code containing error details"/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="confirmExtractConsumption">
+            <description>Retrieves the comment for a file with a given document Id from the UCM , parses the comment
+                into fixed dimensions which is used to update the incremental date in the incremental dimensions table
+                based on the fixed dimensions. This operation is mainly used for Outbound Ess related jobs.
+            </description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="jobName"
+                               description="contains the package name and job name of the job separated by a comma"/>
+                <oer:parameter name="documentIDs"
+                               description="List of elements, each containing the details of the file to be uploaded. The details include the file content, file name, content type, file title, author, security group, and account."/>
+                <oer:return description="returns the status code of the operation"/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="updateInterfaceData">
+            <description>This method updates error data in interface tables pertaining to the specified import process
+                and load request ID.
+            </description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="processName" description="ERP Interface options import job name."/>
+                <oer:parameter name="loadRequestId" description="Load Request ID."/>
+                <oer:parameter name="document"
+                               description="User uploaded blobDomain with corrected interface table data."/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="importBulkData">
+            <description>Uploads a file to the Oracle Universal Content Management server based on the document
+                specified and submits the ESS jobs to import and process the uploaded file with multiple options.
+            </description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="document"
+                               description="List of elements, each containing the details of the file to be uploaded. The details include the file content, file name, content type, file title, author, security group, and account."/>
+                <oer:parameter name="jobDetails"
+                               description="List of elements, each containing the details of the ESS job to be submitted to import and process the uploaded file. The details include the job definition name, job package name, and list of parameters."/>
+                <oer:parameter name="notificationCode"
+                               description="Two digit code representing the type and when a notification is to be sent."/>
+                <oer:parameter name="callbackURL"
+                               description="The callback URL of the service implemented by the customers to receive the ESS job status on job completion."/>
+                <oer:parameter name="jobOptions"
+                               description="A web service operation input parameter. It designates the specific inbound bulk data processing variation selected and the output file type that will be generated upon completion of the data processing."/>
+                <oer:return description="Returns response code containing error details"/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="extractAndPurge">
+            <description>Submits ESS jobs to upload the load and import job output to the Universal Content Management
+                server and purge interface tables with callback and notification.
+            </description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="requestIds" description="The request Ids of load job and import jobs."/>
+                <oer:parameter name="notificationCode"
+                               description="Two digit code representing the type and when a notification is to be sent."/>
+                <oer:parameter name="callbackURL"
+                               description="The callback URL of the service implemented by the customers to receive the ESS job status on job completion."/>
+                <oer:parameter name="jobOptions"
+                               description="A web service operation input parameter which will allow new attributes to be used for future enhancements to ensure data model flexibility."/>
+                <oer:return description="Returns the request ID of the first submitted ESS job."/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="exportBulkData">
+            <description>Submits an ESS job to export and uploads the job output to the Universal Content Management
+                server with callback and notification.
+            </description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="jobName"
+                               description="The ESS job package name and definition name for the ESS job that must be submitted."/>
+                <oer:parameter name="parameterList" description="Parameters used to invoke the ESS job."/>
+                <oer:parameter name="jobOptions"
+                               description="A web service operation input parameter which will allow new attributes to be used for future enhancements to ensure data model flexibility."/>
+                <oer:parameter name="callbackURL"
+                               description="The callback URL of the service implemented by the customers to receive the ESS job status on job completion."/>
+                <oer:parameter name="notificationCode"
+                               description="Two digit code representing the type and when a notification is to be sent."/>
+                <oer:return description="Returns the request ID of the submitted ESS job."/>
+            </oer:parameters>
+        </oer:operation>
+        <oer:operation name="getESSExecutionDetails">
+            <description>Provides the Job Execution details as a Json string.</description>
+            <oer:lifecycle>Active</oer:lifecycle>
+            <oer:parameters>
+                <oer:parameter name="requestId" description="The request ID of the submitted ESS job."/>
+                <oer:parameter name="jobOptions"
+                               description="A web service operation input parameter which will allow new attributes to be used for future enhancements to ensure data model flexibility."/>
+                <oer:return description="Json string that contains Job Execution details"/>
+            </oer:parameters>
+        </oer:operation>
+    </wsdl:documentation>
+    <plnk:partnerLinkType name="ErpIntegrationService">
+        <plnk:role name="ErpIntegrationServiceProvider">
+            <plnk:portType name="tns:ErpIntegrationService"/>
+        </plnk:role>
+        <plnk:role name="ErpIntegrationServiceRequestor">
+            <plnk:portType name="tns:ErpIntegrationServiceResponse"/>
+        </plnk:role>
+    </plnk:partnerLinkType>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                wsu:Id="ErpIntegrationServiceResponse_Fault_Policy"/>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                wsu:Id="ErpIntegrationServiceResponse_Input_Policy">
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <sp:Body/>
+            <sp:Header Namespace="http://www.w3.org/2005/08/addressing"/>
+            <sp:Header Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"/>
+            <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <sp:Body/>
+            <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+        </sp:EncryptedParts>
+    </wsp:Policy>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                wsu:Id="ErpIntegrationServiceResponse_Output_Policy">
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <sp:Body/>
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <sp:Body/>
+        </sp:EncryptedParts>
+    </wsp:Policy>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                wsu:Id="ErpIntegrationServiceSoapHttpPort_Fault_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All/>
+            <wsp:All/>
+            <wsp:All/>
+            <wsp:All/>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                wsu:Id="ErpIntegrationServiceSoapHttpPort_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"/>
+                    <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+                </sp:EncryptedParts>
+            </wsp:All>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"/>
+                    <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+                </sp:EncryptedParts>
+            </wsp:All>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"/>
+                    <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+                </sp:EncryptedParts>
+            </wsp:All>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Namespace="http://www.w3.org/2005/08/addressing"/>
+                    <sp:Header Namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing"/>
+                    <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                    <sp:Header Name="fmw-context" Namespace="http://xmlns.oracle.com/fmw/context/1.0"/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                wsu:Id="ErpIntegrationServiceSoapHttpPort_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+            <wsp:All>
+                <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:SignedParts>
+                <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <sp:Body/>
+                </sp:EncryptedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" wsu:Id="wsaddr_policy">
+        <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"/>
+    </wsp:Policy>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" wsu:Id="wsmtom_policy">
+        <wsoma:OptimizedMimeSerialization
+                xmlns:wsoma="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization"/>
+    </wsp:Policy>
+    <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                wsu:Id="wss11_saml_or_username_token_with_message_protection_service_policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:SymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:ProtectionToken>
+                            <wsp:Policy>
+                                <sp:X509Token
+                                        sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+                                    <wsp:Policy>
+                                        <sp:RequireThumbprintReference/>
+                                        <sp:WssX509V3Token11/>
+                                    </wsp:Policy>
+                                </sp:X509Token>
+                            </wsp:Policy>
+                        </sp:ProtectionToken>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic128/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                        <sp:ProtectTokens/>
+                        <sp:OnlySignEntireHeadersAndBody/>
+                    </wsp:Policy>
+                </sp:SymmetricBinding>
+                <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:SamlToken
+                                sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssSamlV11Token11/>
+                            </wsp:Policy>
+                        </sp:SamlToken>
+                    </wsp:Policy>
+                </sp:SignedSupportingTokens>
+                <sp:EndorsingSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:X509Token
+                                sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssX509V3Token11/>
+                            </wsp:Policy>
+                        </sp:X509Token>
+                    </wsp:Policy>
+                </sp:EndorsingSupportingTokens>
+                <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:RequireSignatureConfirmation/>
+                        <sp:MustSupportRefEncryptedKey/>
+                    </wsp:Policy>
+                </sp:Wss11>
+            </wsp:All>
+            <wsp:All>
+                <sp:SymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:ProtectionToken>
+                            <wsp:Policy>
+                                <sp:X509Token
+                                        sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+                                    <wsp:Policy>
+                                        <sp:RequireThumbprintReference/>
+                                        <sp:WssX509V3Token11/>
+                                    </wsp:Policy>
+                                </sp:X509Token>
+                            </wsp:Policy>
+                        </sp:ProtectionToken>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic128Exn256/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                        <sp:ProtectTokens/>
+                        <sp:OnlySignEntireHeadersAndBody/>
+                    </wsp:Policy>
+                </sp:SymmetricBinding>
+                <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:SamlToken
+                                sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssSamlV11Token11/>
+                            </wsp:Policy>
+                        </sp:SamlToken>
+                    </wsp:Policy>
+                </sp:SignedSupportingTokens>
+                <sp:EndorsingSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:X509Token
+                                sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssX509V3Token11/>
+                            </wsp:Policy>
+                        </sp:X509Token>
+                    </wsp:Policy>
+                </sp:EndorsingSupportingTokens>
+                <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:RequireSignatureConfirmation/>
+                        <sp:MustSupportRefEncryptedKey/>
+                    </wsp:Policy>
+                </sp:Wss11>
+            </wsp:All>
+            <wsp:All>
+                <sp:SymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:ProtectionToken>
+                            <wsp:Policy>
+                                <sp:X509Token
+                                        sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+                                    <wsp:Policy>
+                                        <sp:RequireThumbprintReference/>
+                                        <sp:WssX509V3Token11/>
+                                    </wsp:Policy>
+                                </sp:X509Token>
+                            </wsp:Policy>
+                        </sp:ProtectionToken>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic128/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                        <sp:OnlySignEntireHeadersAndBody/>
+                    </wsp:Policy>
+                </sp:SymmetricBinding>
+                <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:UsernameToken
+                                sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssUsernameToken10/>
+                            </wsp:Policy>
+                        </sp:UsernameToken>
+                    </wsp:Policy>
+                </sp:SignedSupportingTokens>
+                <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:RequireSignatureConfirmation/>
+                        <sp:MustSupportRefEncryptedKey/>
+                    </wsp:Policy>
+                </sp:Wss11>
+            </wsp:All>
+            <wsp:All>
+                <sp:SymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:ProtectionToken>
+                            <wsp:Policy>
+                                <sp:X509Token
+                                        sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+                                    <wsp:Policy>
+                                        <sp:RequireThumbprintReference/>
+                                        <sp:WssX509V3Token11/>
+                                    </wsp:Policy>
+                                </sp:X509Token>
+                            </wsp:Policy>
+                        </sp:ProtectionToken>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic128Exn256/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                        <sp:OnlySignEntireHeadersAndBody/>
+                    </wsp:Policy>
+                </sp:SymmetricBinding>
+                <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:UsernameToken
+                                sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssUsernameToken10/>
+                            </wsp:Policy>
+                        </sp:UsernameToken>
+                    </wsp:Policy>
+                </sp:SignedSupportingTokens>
+                <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:RequireSignatureConfirmation/>
+                        <sp:MustSupportRefEncryptedKey/>
+                    </wsp:Policy>
+                </sp:Wss11>
+            </wsp:All>
+            <wsp:All>
+                <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken RequireClientCertificate="false">
+                                    <wsp:Policy/>
+                                </sp:HttpsToken>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+                <sp:SupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:SamlToken
+                                sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssSamlV11Token10/>
+                            </wsp:Policy>
+                        </sp:SamlToken>
+                    </wsp:Policy>
+                </sp:SupportingTokens>
+            </wsp:All>
+            <wsp:All>
+                <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken RequireClientCertificate="false">
+                                    <wsp:Policy/>
+                                </sp:HttpsToken>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+                <sp:SupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:UsernameToken
+                                sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssUsernameToken10/>
+                            </wsp:Policy>
+                        </sp:UsernameToken>
+                    </wsp:Policy>
+                </sp:SupportingTokens>
+            </wsp:All>
+            <wsp:All>
+                <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken RequireClientCertificate="false">
+                                    <wsp:Policy/>
+                                </sp:HttpsToken>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+            </wsp:All>
+            <wsp:All>
+                <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+                    <wsp:Policy>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken RequireClientCertificate="false">
+                                    <wsp:Policy>
+                                        <osp:HttpJwtAuthentication
+                                                xmlns:osp="http://schemas.oracle.com/ws/2012/01/wssecuritypolicy"/>
+                                    </wsp:Policy>
+                                </sp:HttpsToken>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+                wsu:Id="wss11_saml_token_with_message_protection_client_policy">
+        <sp:SymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <wsp:Policy>
+                <sp:ProtectionToken>
+                    <wsp:Policy>
+                        <sp:X509Token
+                                sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+                            <wsp:Policy>
+                                <sp:RequireThumbprintReference/>
+                                <sp:WssX509V3Token11/>
+                            </wsp:Policy>
+                        </sp:X509Token>
+                    </wsp:Policy>
+                </sp:ProtectionToken>
+                <sp:AlgorithmSuite>
+                    <wsp:Policy>
+                        <sp:Basic128/>
+                    </wsp:Policy>
+                </sp:AlgorithmSuite>
+                <sp:Layout>
+                    <wsp:Policy>
+                        <sp:Lax/>
+                    </wsp:Policy>
+                </sp:Layout>
+                <sp:IncludeTimestamp/>
+                <sp:ProtectTokens/>
+                <sp:OnlySignEntireHeadersAndBody/>
+            </wsp:Policy>
+        </sp:SymmetricBinding>
+        <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <wsp:Policy>
+                <sp:SamlToken
+                        sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                    <wsp:Policy>
+                        <sp:WssSamlV11Token11/>
+                    </wsp:Policy>
+                </sp:SamlToken>
+            </wsp:Policy>
+        </sp:SignedSupportingTokens>
+        <sp:EndorsingSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <wsp:Policy>
+                <sp:X509Token
+                        sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                    <wsp:Policy>
+                        <sp:WssX509V3Token11/>
+                    </wsp:Policy>
+                </sp:X509Token>
+            </wsp:Policy>
+        </sp:EndorsingSupportingTokens>
+        <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+            <wsp:Policy>
+                <sp:RequireSignatureConfirmation/>
+                <sp:MustSupportRefEncryptedKey/>
+            </wsp:Policy>
+        </sp:Wss11>
+    </wsp:Policy>
+    <wsdl:import namespace="http://xmlns.oracle.com/adf/svc/errors/"
+                 location="https://eews-test.fa.em3.oraclecloud.com:443/fscmService/ErpIntegrationService?WSDL=/META-INF/wsdl/ServiceException.wsdl"/>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/oracleas/schema/oracle-fault-11_0"
+                    schemaLocation="https://eews-test.fa.em3.oraclecloud.com:443/fscmService/ErpIntegrationService?XSD=/META-INF/oracle-webservices-async-fault-11_0.xsd"/>
+            <import namespace="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/types/"
+                    schemaLocation="https://eews-test.fa.em3.oraclecloud.com:443/fscmService/ErpIntegrationService?XSD=/oracle/apps/financials/commonModules/shared/model/erpIntegrationService/ErpIntegrationService.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="ErpIntegrationService_getESSJobStatus">
+        <wsdl:part name="parameters" element="types:getESSJobStatus"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getESSJobStatusResponse">
+        <wsdl:part name="parameters" element="types:getESSJobStatusResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getDfltObjAttrHints">
+        <wsdl:part name="parameters" element="types:getDfltObjAttrHints"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getDfltObjAttrHintsResponse">
+        <wsdl:part name="parameters" element="types:getDfltObjAttrHintsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getServiceLastUpdateTime">
+        <wsdl:part name="parameters" element="types:getServiceLastUpdateTime"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getServiceLastUpdateTimeResponse">
+        <wsdl:part name="parameters" element="types:getServiceLastUpdateTimeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getEntityList">
+        <wsdl:part name="parameters" element="types:getEntityList"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getEntityListResponse">
+        <wsdl:part name="parameters" element="types:getEntityListResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getEntityListAsync">
+        <wsdl:part name="parameters" element="types:getEntityListAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getESSJobStatusAsync">
+        <wsdl:part name="parameters" element="types:getESSJobStatusAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getDfltObjAttrHintsAsync">
+        <wsdl:part name="parameters" element="types:getDfltObjAttrHintsAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getServiceLastUpdateTimeAsync">
+        <wsdl:part name="parameters" element="types:getServiceLastUpdateTimeAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_submitESSJobRequest">
+        <wsdl:part name="parameters" element="types:submitESSJobRequest"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_submitESSJobRequestResponse">
+        <wsdl:part name="parameters" element="types:submitESSJobRequestResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_submitESSJobRequestAsync">
+        <wsdl:part name="parameters" element="types:submitESSJobRequestAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_submitJobWithOutput">
+        <wsdl:part name="parameters" element="types:submitJobWithOutput"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_submitJobWithOutputResponse">
+        <wsdl:part name="parameters" element="types:submitJobWithOutputResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_submitJobWithOutputAsync">
+        <wsdl:part name="parameters" element="types:submitJobWithOutputAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getDocumentIdsForFilePrefix">
+        <wsdl:part name="parameters" element="types:getDocumentIdsForFilePrefix"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getDocumentIdsForFilePrefixResponse">
+        <wsdl:part name="parameters" element="types:getDocumentIdsForFilePrefixResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getDocumentIdsForFilePrefixAsync">
+        <wsdl:part name="parameters" element="types:getDocumentIdsForFilePrefixAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getDocumentForDocumentId">
+        <wsdl:part name="parameters" element="types:getDocumentForDocumentId"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getDocumentForDocumentIdResponse">
+        <wsdl:part name="parameters" element="types:getDocumentForDocumentIdResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getDocumentForDocumentIdAsync">
+        <wsdl:part name="parameters" element="types:getDocumentForDocumentIdAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getDocumentsForFilePrefix">
+        <wsdl:part name="parameters" element="types:getDocumentsForFilePrefix"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getDocumentsForFilePrefixResponse">
+        <wsdl:part name="parameters" element="types:getDocumentsForFilePrefixResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getDocumentsForFilePrefixAsync">
+        <wsdl:part name="parameters" element="types:getDocumentsForFilePrefixAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_uploadFileToUcm">
+        <wsdl:part name="parameters" element="types:uploadFileToUcm"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_uploadFileToUcmResponse">
+        <wsdl:part name="parameters" element="types:uploadFileToUcmResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_uploadFileToUcmAsync">
+        <wsdl:part name="parameters" element="types:uploadFileToUcmAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_downloadESSJobExecutionDetails">
+        <wsdl:part name="parameters" element="types:downloadESSJobExecutionDetails"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_downloadESSJobExecutionDetailsResponse">
+        <wsdl:part name="parameters" element="types:downloadESSJobExecutionDetailsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_appendFileComment">
+        <wsdl:part name="parameters" element="types:appendFileComment"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_appendFileCommentResponse">
+        <wsdl:part name="parameters" element="types:appendFileCommentResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_appendFileCommentAsync">
+        <wsdl:part name="parameters" element="types:appendFileCommentAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_downloadESSJobExecutionDetailsAsync">
+        <wsdl:part name="parameters" element="types:downloadESSJobExecutionDetailsAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_downloadExportOutput">
+        <wsdl:part name="parameters" element="types:downloadExportOutput"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_downloadExportOutputResponse">
+        <wsdl:part name="parameters" element="types:downloadExportOutputResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_downloadExportOutputAsync">
+        <wsdl:part name="parameters" element="types:downloadExportOutputAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_loadAndImportData">
+        <wsdl:part name="parameters" element="types:loadAndImportData"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_loadAndImportDataResponse">
+        <wsdl:part name="parameters" element="types:loadAndImportDataResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_loadAndImportDataAsync">
+        <wsdl:part name="parameters" element="types:loadAndImportDataAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_confirmExtractConsumption">
+        <wsdl:part name="parameters" element="types:confirmExtractConsumption"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_confirmExtractConsumptionResponse">
+        <wsdl:part name="parameters" element="types:confirmExtractConsumptionResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_confirmExtractConsumptionAsync">
+        <wsdl:part name="parameters" element="types:confirmExtractConsumptionAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_updateInterfaceData">
+        <wsdl:part name="parameters" element="types:updateInterfaceData"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_updateInterfaceDataResponse">
+        <wsdl:part name="parameters" element="types:updateInterfaceDataResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_updateInterfaceDataAsync">
+        <wsdl:part name="parameters" element="types:updateInterfaceDataAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_importBulkData">
+        <wsdl:part name="parameters" element="types:importBulkData"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_importBulkDataResponse">
+        <wsdl:part name="parameters" element="types:importBulkDataResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_importBulkDataAsync">
+        <wsdl:part name="parameters" element="types:importBulkDataAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_extractAndPurge">
+        <wsdl:part name="parameters" element="types:extractAndPurge"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_extractAndPurgeResponse">
+        <wsdl:part name="parameters" element="types:extractAndPurgeResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_extractAndPurgeAsync">
+        <wsdl:part name="parameters" element="types:extractAndPurgeAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_exportBulkData">
+        <wsdl:part name="parameters" element="types:exportBulkData"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_exportBulkDataResponse">
+        <wsdl:part name="parameters" element="types:exportBulkDataResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_exportBulkDataAsync">
+        <wsdl:part name="parameters" element="types:exportBulkDataAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getESSExecutionDetails">
+        <wsdl:part name="parameters" element="types:getESSExecutionDetails"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getESSExecutionDetailsResponse">
+        <wsdl:part name="parameters" element="types:getESSExecutionDetailsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getESSExecutionDetailsAsync">
+        <wsdl:part name="parameters" element="types:getESSExecutionDetailsAsync"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_onFault">
+        <wsdl:part name="parameters" element="orafault:Fault"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getEntityListAsyncResponse">
+        <wsdl:part name="parameters" element="types:getEntityListAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getESSJobStatusAsyncResponse">
+        <wsdl:part name="parameters" element="types:getESSJobStatusAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getDfltObjAttrHintsAsyncResponse">
+        <wsdl:part name="parameters" element="types:getDfltObjAttrHintsAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getServiceLastUpdateTimeAsyncResponse">
+        <wsdl:part name="parameters" element="types:getServiceLastUpdateTimeAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_submitESSJobRequestAsyncResponse">
+        <wsdl:part name="parameters" element="types:submitESSJobRequestAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_submitJobWithOutputAsyncResponse">
+        <wsdl:part name="parameters" element="types:submitJobWithOutputAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getDocumentIdsForFilePrefixAsyncResponse">
+        <wsdl:part name="parameters" element="types:getDocumentIdsForFilePrefixAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getDocumentForDocumentIdAsyncResponse">
+        <wsdl:part name="parameters" element="types:getDocumentForDocumentIdAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getDocumentsForFilePrefixAsyncResponse">
+        <wsdl:part name="parameters" element="types:getDocumentsForFilePrefixAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_uploadFileToUcmAsyncResponse">
+        <wsdl:part name="parameters" element="types:uploadFileToUcmAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_appendFileCommentAsyncResponse">
+        <wsdl:part name="parameters" element="types:appendFileCommentAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_downloadESSJobExecutionDetailsAsyncResponse">
+        <wsdl:part name="parameters" element="types:downloadESSJobExecutionDetailsAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_downloadExportOutputAsyncResponse">
+        <wsdl:part name="parameters" element="types:downloadExportOutputAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_loadAndImportDataAsyncResponse">
+        <wsdl:part name="parameters" element="types:loadAndImportDataAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_confirmExtractConsumptionAsyncResponse">
+        <wsdl:part name="parameters" element="types:confirmExtractConsumptionAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_updateInterfaceDataAsyncResponse">
+        <wsdl:part name="parameters" element="types:updateInterfaceDataAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_importBulkDataAsyncResponse">
+        <wsdl:part name="parameters" element="types:importBulkDataAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_extractAndPurgeAsyncResponse">
+        <wsdl:part name="parameters" element="types:extractAndPurgeAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_exportBulkDataAsyncResponse">
+        <wsdl:part name="parameters" element="types:exportBulkDataAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:message name="ErpIntegrationService_getESSExecutionDetailsAsyncResponse">
+        <wsdl:part name="parameters" element="types:getESSExecutionDetailsAsyncResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="ErpIntegrationService">
+        <wsdl:documentation/>
+        <wsdl:operation name="getESSJobStatus">
+            <wsdl:input message="tns:ErpIntegrationService_getESSJobStatus"/>
+            <wsdl:output message="tns:ErpIntegrationService_getESSJobStatusResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="getDfltObjAttrHints">
+            <wsdl:input message="tns:ErpIntegrationService_getDfltObjAttrHints"/>
+            <wsdl:output message="tns:ErpIntegrationService_getDfltObjAttrHintsResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="getServiceLastUpdateTime">
+            <wsdl:input message="tns:ErpIntegrationService_getServiceLastUpdateTime"/>
+            <wsdl:output message="tns:ErpIntegrationService_getServiceLastUpdateTimeResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="getEntityList">
+            <wsdl:input message="tns:ErpIntegrationService_getEntityList"/>
+            <wsdl:output message="tns:ErpIntegrationService_getEntityListResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="getEntityListAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_getEntityListAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getEntityListAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="getESSJobStatusAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_getESSJobStatusAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getESSJobStatusAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="getDfltObjAttrHintsAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_getDfltObjAttrHintsAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDfltObjAttrHintsAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="getServiceLastUpdateTimeAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_getServiceLastUpdateTimeAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getServiceLastUpdateTimeAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="submitESSJobRequest">
+            <wsdl:input message="tns:ErpIntegrationService_submitESSJobRequest"/>
+            <wsdl:output message="tns:ErpIntegrationService_submitESSJobRequestResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="submitESSJobRequestAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_submitESSJobRequestAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/submitESSJobRequestAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="submitJobWithOutput">
+            <wsdl:input message="tns:ErpIntegrationService_submitJobWithOutput"/>
+            <wsdl:output message="tns:ErpIntegrationService_submitJobWithOutputResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="submitJobWithOutputAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_submitJobWithOutputAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/submitJobWithOutputAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentIdsForFilePrefix">
+            <wsdl:input message="tns:ErpIntegrationService_getDocumentIdsForFilePrefix"/>
+            <wsdl:output message="tns:ErpIntegrationService_getDocumentIdsForFilePrefixResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentIdsForFilePrefixAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_getDocumentIdsForFilePrefixAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDocumentIdsForFilePrefixAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentForDocumentId">
+            <wsdl:input message="tns:ErpIntegrationService_getDocumentForDocumentId"/>
+            <wsdl:output message="tns:ErpIntegrationService_getDocumentForDocumentIdResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentForDocumentIdAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_getDocumentForDocumentIdAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDocumentForDocumentIdAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentsForFilePrefix">
+            <wsdl:input message="tns:ErpIntegrationService_getDocumentsForFilePrefix"/>
+            <wsdl:output message="tns:ErpIntegrationService_getDocumentsForFilePrefixResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentsForFilePrefixAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_getDocumentsForFilePrefixAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDocumentsForFilePrefixAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="uploadFileToUcm">
+            <wsdl:input message="tns:ErpIntegrationService_uploadFileToUcm"/>
+            <wsdl:output message="tns:ErpIntegrationService_uploadFileToUcmResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="uploadFileToUcmAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_uploadFileToUcmAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/uploadFileToUcmAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="downloadESSJobExecutionDetails">
+            <wsdl:input message="tns:ErpIntegrationService_downloadESSJobExecutionDetails"/>
+            <wsdl:output message="tns:ErpIntegrationService_downloadESSJobExecutionDetailsResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="appendFileComment">
+            <wsdl:input message="tns:ErpIntegrationService_appendFileComment"/>
+            <wsdl:output message="tns:ErpIntegrationService_appendFileCommentResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="appendFileCommentAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_appendFileCommentAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/appendFileCommentAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="downloadESSJobExecutionDetailsAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_downloadESSJobExecutionDetailsAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/downloadESSJobExecutionDetailsAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="downloadExportOutput">
+            <wsdl:input message="tns:ErpIntegrationService_downloadExportOutput"/>
+            <wsdl:output message="tns:ErpIntegrationService_downloadExportOutputResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="downloadExportOutputAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_downloadExportOutputAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/downloadExportOutputAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="loadAndImportData">
+            <wsdl:input message="tns:ErpIntegrationService_loadAndImportData"/>
+            <wsdl:output message="tns:ErpIntegrationService_loadAndImportDataResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="loadAndImportDataAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_loadAndImportDataAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/loadAndImportDataAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="confirmExtractConsumption">
+            <wsdl:input message="tns:ErpIntegrationService_confirmExtractConsumption"/>
+            <wsdl:output message="tns:ErpIntegrationService_confirmExtractConsumptionResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="confirmExtractConsumptionAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_confirmExtractConsumptionAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/confirmExtractConsumptionAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="updateInterfaceData">
+            <wsdl:input message="tns:ErpIntegrationService_updateInterfaceData"/>
+            <wsdl:output message="tns:ErpIntegrationService_updateInterfaceDataResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="updateInterfaceDataAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_updateInterfaceDataAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/updateInterfaceDataAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="importBulkData">
+            <wsdl:input message="tns:ErpIntegrationService_importBulkData"/>
+            <wsdl:output message="tns:ErpIntegrationService_importBulkDataResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="importBulkDataAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_importBulkDataAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/importBulkDataAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="extractAndPurge">
+            <wsdl:input message="tns:ErpIntegrationService_extractAndPurge"/>
+            <wsdl:output message="tns:ErpIntegrationService_extractAndPurgeResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="extractAndPurgeAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_extractAndPurgeAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/extractAndPurgeAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="exportBulkData">
+            <wsdl:input message="tns:ErpIntegrationService_exportBulkData"/>
+            <wsdl:output message="tns:ErpIntegrationService_exportBulkDataResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="exportBulkDataAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_exportBulkDataAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/exportBulkDataAsync"/>
+        </wsdl:operation>
+        <wsdl:operation name="getESSExecutionDetails">
+            <wsdl:input message="tns:ErpIntegrationService_getESSExecutionDetails"/>
+            <wsdl:output message="tns:ErpIntegrationService_getESSExecutionDetailsResponse"/>
+            <wsdl:fault name="ServiceException" message="errors:ServiceException"/>
+        </wsdl:operation>
+        <wsdl:operation name="getESSExecutionDetailsAsync">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_getESSExecutionDetailsAsync"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getESSExecutionDetailsAsync"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:portType name="ErpIntegrationServiceResponse">
+        <wsdl:operation name="onFault">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_onFault"
+                        ns1:Action="http://xmlns.oracle.com/oracleas/schema/oracle-fault-11_0/Fault"/>
+        </wsdl:operation>
+        <wsdl:operation name="getEntityListAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_getEntityListAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getEntityListAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getESSJobStatusAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_getESSJobStatusAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getESSJobStatusAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getDfltObjAttrHintsAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_getDfltObjAttrHintsAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDfltObjAttrHintsAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getServiceLastUpdateTimeAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_getServiceLastUpdateTimeAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getServiceLastUpdateTimeAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="submitESSJobRequestAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_submitESSJobRequestAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/submitESSJobRequestAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="submitJobWithOutputAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_submitJobWithOutputAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/submitJobWithOutputAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentIdsForFilePrefixAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_getDocumentIdsForFilePrefixAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDocumentIdsForFilePrefixAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentForDocumentIdAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_getDocumentForDocumentIdAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDocumentForDocumentIdAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentsForFilePrefixAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_getDocumentsForFilePrefixAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDocumentsForFilePrefixAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="uploadFileToUcmAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_uploadFileToUcmAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/uploadFileToUcmAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="appendFileCommentAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_appendFileCommentAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/appendFileCommentAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="downloadESSJobExecutionDetailsAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_downloadESSJobExecutionDetailsAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/downloadESSJobExecutionDetailsAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="downloadExportOutputAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_downloadExportOutputAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/downloadExportOutputAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="loadAndImportDataAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_loadAndImportDataAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/loadAndImportDataAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="confirmExtractConsumptionAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_confirmExtractConsumptionAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/confirmExtractConsumptionAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="updateInterfaceDataAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_updateInterfaceDataAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/updateInterfaceDataAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="importBulkDataAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_importBulkDataAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/importBulkDataAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="extractAndPurgeAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_extractAndPurgeAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/extractAndPurgeAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="exportBulkDataAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_exportBulkDataAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/exportBulkDataAsyncResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getESSExecutionDetailsAsyncResponse">
+            <wsdl:input xmlns:ns1="http://www.w3.org/2006/05/addressing/wsdl"
+                        message="tns:ErpIntegrationService_getESSExecutionDetailsAsyncResponse"
+                        ns1:Action="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getESSExecutionDetailsAsyncResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ErpIntegrationServiceSoapHttp" type="tns:ErpIntegrationService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                             URI="#wss11_saml_or_username_token_with_message_protection_service_policy"
+                             wsdl:required="false"/>
+        <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#wsmtom_policy"
+                             wsdl:required="false"/>
+        <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" URI="#wsaddr_policy"
+                             wsdl:required="false"/>
+        <wsdl:operation name="getESSJobStatus">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getESSJobStatus"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getDfltObjAttrHints">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDfltObjAttrHints"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getServiceLastUpdateTime">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getServiceLastUpdateTime"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getEntityList">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getEntityList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getEntityListAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getEntityListAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getESSJobStatusAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getESSJobStatusAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getDfltObjAttrHintsAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDfltObjAttrHintsAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getServiceLastUpdateTimeAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getServiceLastUpdateTimeAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="submitESSJobRequest">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/submitESSJobRequest"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="submitESSJobRequestAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/submitESSJobRequestAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="submitJobWithOutput">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/submitJobWithOutput"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="submitJobWithOutputAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/submitJobWithOutputAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentIdsForFilePrefix">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDocumentIdsForFilePrefix"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentIdsForFilePrefixAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDocumentIdsForFilePrefixAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentForDocumentId">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDocumentForDocumentId"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentForDocumentIdAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDocumentForDocumentIdAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentsForFilePrefix">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDocumentsForFilePrefix"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentsForFilePrefixAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDocumentsForFilePrefixAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="uploadFileToUcm">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/uploadFileToUcm"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="uploadFileToUcmAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/uploadFileToUcmAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="downloadESSJobExecutionDetails">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/downloadESSJobExecutionDetails"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="appendFileComment">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/appendFileComment"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="appendFileCommentAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/appendFileCommentAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="downloadESSJobExecutionDetailsAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/downloadESSJobExecutionDetailsAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="downloadExportOutput">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/downloadExportOutput"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="downloadExportOutputAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/downloadExportOutputAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="loadAndImportData">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/loadAndImportData"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="loadAndImportDataAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/loadAndImportDataAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="confirmExtractConsumption">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/confirmExtractConsumption"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="confirmExtractConsumptionAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/confirmExtractConsumptionAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="updateInterfaceData">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/updateInterfaceData"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="updateInterfaceDataAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/updateInterfaceDataAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="importBulkData">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/importBulkData"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="importBulkDataAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/importBulkDataAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="extractAndPurge">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/extractAndPurge"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="extractAndPurgeAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/extractAndPurgeAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="exportBulkData">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/exportBulkData"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="exportBulkDataAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/exportBulkDataAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getESSExecutionDetails">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getESSExecutionDetails"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Output_Policy" wsdl:required="false"/>
+            </wsdl:output>
+            <wsdl:fault name="ServiceException">
+                <soap:fault name="ServiceException" use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Fault_Policy" wsdl:required="false"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="getESSExecutionDetailsAsync">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getESSExecutionDetailsAsync"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceSoapHttpPort_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="ErpIntegrationServiceResponseBinding" type="tns:ErpIntegrationServiceResponse">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                             URI="#wss11_saml_token_with_message_protection_client_policy" wsdl:required="false"/>
+        <wsdl:operation name="onFault">
+            <soap:operation soapAction="http://xmlns.oracle.com/oracleas/schema/oracle-fault-11_0/Fault"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getEntityListAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getEntityListAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getESSJobStatusAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getESSJobStatusAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getDfltObjAttrHintsAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDfltObjAttrHintsAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getServiceLastUpdateTimeAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getServiceLastUpdateTimeAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="submitESSJobRequestAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/submitESSJobRequestAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="submitJobWithOutputAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/submitJobWithOutputAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentIdsForFilePrefixAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDocumentIdsForFilePrefixAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentForDocumentIdAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDocumentForDocumentIdAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getDocumentsForFilePrefixAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getDocumentsForFilePrefixAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="uploadFileToUcmAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/uploadFileToUcmAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="appendFileCommentAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/appendFileCommentAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="downloadESSJobExecutionDetailsAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/downloadESSJobExecutionDetailsAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="downloadExportOutputAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/downloadExportOutputAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="loadAndImportDataAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/loadAndImportDataAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="confirmExtractConsumptionAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/confirmExtractConsumptionAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="updateInterfaceDataAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/updateInterfaceDataAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="importBulkDataAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/importBulkDataAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="extractAndPurgeAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/extractAndPurgeAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="exportBulkDataAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/exportBulkDataAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+        <wsdl:operation name="getESSExecutionDetailsAsyncResponse">
+            <soap:operation
+                    soapAction="http://xmlns.oracle.com/apps/financials/commonModules/shared/model/erpIntegrationService/getESSExecutionDetailsAsyncResponse"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+                <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                                     URI="#ErpIntegrationServiceResponse_Input_Policy" wsdl:required="false"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ErpIntegrationService">
+        <wsdl:port name="ErpIntegrationServiceSoapHttpPort" binding="tns:ErpIntegrationServiceSoapHttp">
+            <soap:address location="https://eews-test.fa.em3.oraclecloud.com:443/fscmService/ErpIntegrationService"/>
+            <wsa:EndpointReference xmlns:wsa="http://www.w3.org/2005/08/addressing">
+                <wsa:Address xmlns:wsa="http://www.w3.org/2005/08/addressing">
+                    https://eews-test.fa.em3.oraclecloud.com:443/fscmService/ErpIntegrationService
+                </wsa:Address>
+                <wsid:Identity xmlns:wsid="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+                    <dsig:KeyInfo xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+                        <dsig:X509Data>
+                            <dsig:X509Certificate>
+                                MIIDVzCCAj+gAwIBAgIIDtrco4GREbgwDQYJKoZIhvcNAQELBQAwWTETMBEGCgmSJomT8ixkARkWA2NvbTEWMBQGCgmSJomT8ixkARkWBm9yYWNsZTEVMBMGCgmSJomT8ixkARkWBWNsb3VkMRMwEQYDVQQDEwpDbG91ZDlDQS0yMB4XDTE2MDUyMDIwMTczMFoXDTI2MDUxODIwMTczMFowWzETMBEGCgmSJomT8ixkARkWA2NvbTEWMBQGCgmSJomT8ixkARkWBm9yYWNsZTEVMBMGCgmSJomT8ixkARkWBWNsb3VkMRUwEwYDVQQDEwxGQUVuY3J5cHRpb24wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC20p4rAw6sDNB26lYNwzwSzzEFXEMRU9PE46bMbqA4/auSJX9AKaFmNLYnimPtZQ/roSNWWmvp68qv9cKTbpMonTGLJ1ppbVCRIsh2Q0y3J0hssFmi4G0l/tFaqo85yGlRpmy3/WKWz82334BTUuNB9hEHX+pQxo2aela4GRNo6Xaz4fBQDl1HWINrYJkdEBgZ3CYqf2bDM9/4ZmyAbdbUWTnCw8aevk+eb88oEwPyVXG1CJfaxYolZymQ5VHkzSEzNNTM4HtMSF6asg/4s7zWianeGhAqP1daEN10RxUUQtbmGAo1a4ohndM8l/sq2OkKwCgo8KqgvHRJKz5mjt/RAgMBAAGjITAfMB0GA1UdDgQWBBR676ji66R+SK3qW+GJ2c+UVhgeUzANBgkqhkiG9w0BAQsFAAOCAQEAVL5JcJ2LFnHHJQQFOsReYAyE+Fr+YRd9aDmGgq934YIV7LOH0mWm0xf6AAHJ9/SiRHV14lwCxViGAOVOWvuxdJAifg1lC7Pbj0huE9FsQ70A0kC7S68okD7qXs/FsEW5NyCiDWtL+t0ifbc35raDMRPXfIo5rdq9HHniJf4eHqMXIcp8eVn6DLbQTLk697v6H5rTO4c8Ubyw0FD134G3DnM7fsqIBTGAr3XTk503ynU6guGioLnA1QIRqVVDZR7YUO+HTlH9nUaur4gM7TIIZeg4x/zvVo1j/y7989hHctuqfbFHYOnjFfUrUHmuIfdTfP1eT7rXy8ZGeKFSj00apA==
+                            </dsig:X509Certificate>
+                            <dsig:X509IssuerSerial>
+                                <dsig:X509IssuerName>CN=Cloud9CA-2, DC=cloud, DC=oracle, DC=com</dsig:X509IssuerName>
+                                <dsig:X509SerialNumber>1070410456265462200</dsig:X509SerialNumber>
+                            </dsig:X509IssuerSerial>
+                            <dsig:X509SubjectName>CN=FAEncryption, DC=cloud, DC=oracle, DC=com</dsig:X509SubjectName>
+                            <dsig:X509SKI>eu+o4uukfkit6lvhidnPlFYYHlM=</dsig:X509SKI>
+                            <dsig:X509Certificate>
+                                MIIDazCCAlOgAwIBAgIIFuDquJkhEWkwDQYJKoZIhvcNAQELBQAwWTETMBEGCgmSJomT8ixkARkWA2NvbTEWMBQGCgmSJomT8ixkARkWBm9yYWNsZTEVMBMGCgmSJomT8ixkARkWBWNsb3VkMRMwEQYDVQQDEwpDbG91ZDlDQS0yMCAXDTE2MDUyMDIwMTcyOVoYDzIxMTYwNDI2MjAxNzI5WjBZMRMwEQYKCZImiZPyLGQBGRYDY29tMRYwFAYKCZImiZPyLGQBGRYGb3JhY2xlMRUwEwYKCZImiZPyLGQBGRYFY2xvdWQxEzARBgNVBAMTCkNsb3VkOUNBLTIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDLwdEwZmYCP/7k6wVHIi/WNclg10PshbgYoDyL2zmXrFYpExx9SUYWOHarFozprhXUtjdptZusYqhxgI247mScBU+kYSsC7nPTNLZwIWO4NXuNh8bMDeSKFmJ3muDa+5wxkp7oVIFGknmZwVm533zj4YWUlccLGew8O1DmhJSAyJuUbdScOBjZYSba9/IALFs0UeuwAKh4sQWZDibxkv2MboJnAU4oxel9csH1Njxqp1QPkSo+9qhX0ZQwHjes6MO9QEanQUaQACzf4TSgXXCO1Nf28OjkfNQ5kMSeSwsdnbmElS+bR9cqRCPiFmkaxfkWeC7IUOdVM/1W2884zeXtAgMBAAGjNTAzMBIGA1UdEwEB/wQIMAYBAf8CAQAwHQYDVR0OBBYEFPY3WD1TRs0Io1A834HjZSP3Rqg1MA0GCSqGSIb3DQEBCwUAA4IBAQBDKp5BqYCnloKLbMZcrb/3o75Yi2HjHw/91wHEULdx47EogA5/ruNO+K63aisbEi1wPPlsF/IL0B+qrcarneQ9J2ioHkpHIIl42l7p7DOY/XiboOPeNcE9EaeEky88k22twnH7KEybYMULuunkHBJ35RzUj9YACQ7IZksAfP4TF3s+ohNzSXqOZ6jlQoZBkXUpcY4+PMcp8Mn/iZ843+2Rn2e/rk0sYSr2twXwxN6k8derBor5ocCazp/k1qelQJFSnVA6OWzfoGcLG7xAqzge+VaKlu0FMWMNQXh3Vz6GEowqBchP5K5i5UbW8+1HFOjyMomVAyZR77EL21YV8vcy
+                            </dsig:X509Certificate>
+                        </dsig:X509Data>
+                    </dsig:KeyInfo>
+                </wsid:Identity>
+            </wsa:EndpointReference>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
