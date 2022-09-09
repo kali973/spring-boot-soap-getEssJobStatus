@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_spring-boot-soap-getessjobstatus" default="compile.module.spring-boot-soap-getessjobstatus">
+    <dirname property="module.spring-boot-soap-getessjobstatus.basedir"
+             file="${ant.file.module_spring-boot-soap-getessjobstatus}"/>
+
+    <property name="module.jdk.home.spring-boot-soap-getessjobstatus" value="${project.jdk.home}"/>
+    <property name="module.jdk.bin.spring-boot-soap-getessjobstatus" value="${project.jdk.bin}"/>
+    <property name="module.jdk.classpath.spring-boot-soap-getessjobstatus" value="${project.jdk.classpath}"/>
+
+    <property name="compiler.args.spring-boot-soap-getessjobstatus"
+              value="-encoding UTF-8 -source 8 -target 1.8 ${compiler.args}"/>
+
+    <property name="spring-boot-soap-getessjobstatus.output.dir"
+              value="${module.spring-boot-soap-getessjobstatus.basedir}/target/classes"/>
+    <property name="spring-boot-soap-getessjobstatus.testoutput.dir"
+              value="${module.spring-boot-soap-getessjobstatus.basedir}/target/test-classes"/>
+
+    <path id="spring-boot-soap-getessjobstatus.module.bootclasspath">
+        <!-- Paths to be included in compilation bootclasspath -->
+    </path>
+
+    <path id="spring-boot-soap-getessjobstatus.module.production.classpath">
+        <path refid="${module.jdk.classpath.spring-boot-soap-getessjobstatus}"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter-web-services:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-context:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-autoconfigure:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter-logging:1.4.1.release.classpath"/>
+        <path refid="library.maven:_ch.qos.logback:logback-classic:1.1.7.classpath"/>
+        <path refid="library.maven:_ch.qos.logback:logback-core:1.1.7.classpath"/>
+        <path refid="library.maven:_org.slf4j:slf4j-api:1.7.21.classpath"/>
+        <path refid="library.maven:_org.slf4j:jcl-over-slf4j:1.7.21.classpath"/>
+        <path refid="library.maven:_org.slf4j:jul-to-slf4j:1.7.21.classpath"/>
+        <path refid="library.maven:_org.slf4j:log4j-over-slf4j:1.7.21.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter-web:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter-tomcat:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.apache.tomcat.embed:tomcat-embed-core:8.5.5.classpath"/>
+        <path refid="library.maven:_org.apache.tomcat.embed:tomcat-embed-el:8.5.5.classpath"/>
+        <path refid="library.maven:_org.apache.tomcat.embed:tomcat-embed-websocket:8.5.5.classpath"/>
+        <path refid="library.maven:_org.hibernate:hibernate-validator:5.2.4.final.classpath"/>
+        <path refid="library.maven:_javax.validation:validation-api:1.1.0.final.classpath"/>
+        <path refid="library.maven:_org.jboss.logging:jboss-logging:3.3.0.final.classpath"/>
+        <path refid="library.maven:_com.fasterxml:classmate:1.3.1.classpath"/>
+        <path refid="library.maven:_com.fasterxml.jackson.core:jackson-databind:2.8.3.classpath"/>
+        <path refid="library.maven:_com.fasterxml.jackson.core:jackson-annotations:2.8.3.classpath"/>
+        <path refid="library.maven:_com.fasterxml.jackson.core:jackson-core:2.8.3.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-web:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-webmvc:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-expression:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-oxm:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-beans:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework.ws:spring-ws-core:2.3.0.release.classpath"/>
+        <path refid="library.maven:_org.springframework.ws:spring-xml:2.3.0.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-aop:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-core:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.junit.jupiter:junit-jupiter-api:5.7.2.classpath"/>
+        <path refid="library.maven:_org.apiguardian:apiguardian-api:1.1.0.classpath"/>
+        <path refid="library.maven:_org.opentest4j:opentest4j:1.2.0.classpath"/>
+        <path refid="library.maven:_org.junit.platform:junit-platform-commons:1.7.2.classpath"/>
+    </path>
+
+    <path id="spring-boot-soap-getessjobstatus.runtime.production.module.classpath">
+        <pathelement location="${spring-boot-soap-getessjobstatus.output.dir}"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter-web-services:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-context:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-autoconfigure:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter-logging:1.4.1.release.classpath"/>
+        <path refid="library.maven:_ch.qos.logback:logback-classic:1.1.7.classpath"/>
+        <path refid="library.maven:_ch.qos.logback:logback-core:1.1.7.classpath"/>
+        <path refid="library.maven:_org.slf4j:slf4j-api:1.7.21.classpath"/>
+        <path refid="library.maven:_org.slf4j:jcl-over-slf4j:1.7.21.classpath"/>
+        <path refid="library.maven:_org.slf4j:jul-to-slf4j:1.7.21.classpath"/>
+        <path refid="library.maven:_org.slf4j:log4j-over-slf4j:1.7.21.classpath"/>
+        <path refid="library.maven:_org.yaml:snakeyaml:1.17.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter-web:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter-tomcat:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.apache.tomcat.embed:tomcat-embed-core:8.5.5.classpath"/>
+        <path refid="library.maven:_org.apache.tomcat.embed:tomcat-embed-el:8.5.5.classpath"/>
+        <path refid="library.maven:_org.apache.tomcat.embed:tomcat-embed-websocket:8.5.5.classpath"/>
+        <path refid="library.maven:_org.hibernate:hibernate-validator:5.2.4.final.classpath"/>
+        <path refid="library.maven:_javax.validation:validation-api:1.1.0.final.classpath"/>
+        <path refid="library.maven:_org.jboss.logging:jboss-logging:3.3.0.final.classpath"/>
+        <path refid="library.maven:_com.fasterxml:classmate:1.3.1.classpath"/>
+        <path refid="library.maven:_com.fasterxml.jackson.core:jackson-databind:2.8.3.classpath"/>
+        <path refid="library.maven:_com.fasterxml.jackson.core:jackson-annotations:2.8.3.classpath"/>
+        <path refid="library.maven:_com.fasterxml.jackson.core:jackson-core:2.8.3.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-web:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-webmvc:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-expression:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-oxm:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-beans:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework.ws:spring-ws-core:2.3.0.release.classpath"/>
+        <path refid="library.maven:_org.springframework.ws:spring-xml:2.3.0.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-aop:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-core:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.junit.jupiter:junit-jupiter-api:5.7.2.classpath"/>
+        <path refid="library.maven:_org.apiguardian:apiguardian-api:1.1.0.classpath"/>
+        <path refid="library.maven:_org.opentest4j:opentest4j:1.2.0.classpath"/>
+        <path refid="library.maven:_org.junit.platform:junit-platform-commons:1.7.2.classpath"/>
+    </path>
+
+    <path id="spring-boot-soap-getessjobstatus.module.classpath">
+        <path refid="${module.jdk.classpath.spring-boot-soap-getessjobstatus}"/>
+        <pathelement location="${spring-boot-soap-getessjobstatus.output.dir}"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter-web-services:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-context:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-autoconfigure:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter-logging:1.4.1.release.classpath"/>
+        <path refid="library.maven:_ch.qos.logback:logback-classic:1.1.7.classpath"/>
+        <path refid="library.maven:_ch.qos.logback:logback-core:1.1.7.classpath"/>
+        <path refid="library.maven:_org.slf4j:slf4j-api:1.7.21.classpath"/>
+        <path refid="library.maven:_org.slf4j:jcl-over-slf4j:1.7.21.classpath"/>
+        <path refid="library.maven:_org.slf4j:jul-to-slf4j:1.7.21.classpath"/>
+        <path refid="library.maven:_org.slf4j:log4j-over-slf4j:1.7.21.classpath"/>
+        <path refid="library.maven:_org.yaml:snakeyaml:1.17.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter-web:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter-tomcat:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.apache.tomcat.embed:tomcat-embed-core:8.5.5.classpath"/>
+        <path refid="library.maven:_org.apache.tomcat.embed:tomcat-embed-el:8.5.5.classpath"/>
+        <path refid="library.maven:_org.apache.tomcat.embed:tomcat-embed-websocket:8.5.5.classpath"/>
+        <path refid="library.maven:_org.hibernate:hibernate-validator:5.2.4.final.classpath"/>
+        <path refid="library.maven:_javax.validation:validation-api:1.1.0.final.classpath"/>
+        <path refid="library.maven:_org.jboss.logging:jboss-logging:3.3.0.final.classpath"/>
+        <path refid="library.maven:_com.fasterxml:classmate:1.3.1.classpath"/>
+        <path refid="library.maven:_com.fasterxml.jackson.core:jackson-databind:2.8.3.classpath"/>
+        <path refid="library.maven:_com.fasterxml.jackson.core:jackson-annotations:2.8.3.classpath"/>
+        <path refid="library.maven:_com.fasterxml.jackson.core:jackson-core:2.8.3.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-web:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-webmvc:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-expression:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-oxm:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-beans:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework.ws:spring-ws-core:2.3.0.release.classpath"/>
+        <path refid="library.maven:_org.springframework.ws:spring-xml:2.3.0.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-aop:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-test:5.3.14.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-core:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.junit.jupiter:junit-jupiter-api:5.7.2.classpath"/>
+        <path refid="library.maven:_org.apiguardian:apiguardian-api:1.1.0.classpath"/>
+        <path refid="library.maven:_org.opentest4j:opentest4j:1.2.0.classpath"/>
+        <path refid="library.maven:_org.junit.platform:junit-platform-commons:1.7.2.classpath"/>
+    </path>
+
+    <path id="spring-boot-soap-getessjobstatus.runtime.module.classpath">
+        <pathelement location="${spring-boot-soap-getessjobstatus.testoutput.dir}"/>
+        <pathelement location="${spring-boot-soap-getessjobstatus.output.dir}"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter-web-services:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-context:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-autoconfigure:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter-logging:1.4.1.release.classpath"/>
+        <path refid="library.maven:_ch.qos.logback:logback-classic:1.1.7.classpath"/>
+        <path refid="library.maven:_ch.qos.logback:logback-core:1.1.7.classpath"/>
+        <path refid="library.maven:_org.slf4j:slf4j-api:1.7.21.classpath"/>
+        <path refid="library.maven:_org.slf4j:jcl-over-slf4j:1.7.21.classpath"/>
+        <path refid="library.maven:_org.slf4j:jul-to-slf4j:1.7.21.classpath"/>
+        <path refid="library.maven:_org.slf4j:log4j-over-slf4j:1.7.21.classpath"/>
+        <path refid="library.maven:_org.yaml:snakeyaml:1.17.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter-web:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.springframework.boot:spring-boot-starter-tomcat:1.4.1.release.classpath"/>
+        <path refid="library.maven:_org.apache.tomcat.embed:tomcat-embed-core:8.5.5.classpath"/>
+        <path refid="library.maven:_org.apache.tomcat.embed:tomcat-embed-el:8.5.5.classpath"/>
+        <path refid="library.maven:_org.apache.tomcat.embed:tomcat-embed-websocket:8.5.5.classpath"/>
+        <path refid="library.maven:_org.hibernate:hibernate-validator:5.2.4.final.classpath"/>
+        <path refid="library.maven:_javax.validation:validation-api:1.1.0.final.classpath"/>
+        <path refid="library.maven:_org.jboss.logging:jboss-logging:3.3.0.final.classpath"/>
+        <path refid="library.maven:_com.fasterxml:classmate:1.3.1.classpath"/>
+        <path refid="library.maven:_com.fasterxml.jackson.core:jackson-databind:2.8.3.classpath"/>
+        <path refid="library.maven:_com.fasterxml.jackson.core:jackson-annotations:2.8.3.classpath"/>
+        <path refid="library.maven:_com.fasterxml.jackson.core:jackson-core:2.8.3.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-web:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-webmvc:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-expression:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-oxm:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-beans:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework.ws:spring-ws-core:2.3.0.release.classpath"/>
+        <path refid="library.maven:_org.springframework.ws:spring-xml:2.3.0.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-aop:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-test:5.3.14.classpath"/>
+        <path refid="library.maven:_org.springframework:spring-core:4.3.3.release.classpath"/>
+        <path refid="library.maven:_org.junit.jupiter:junit-jupiter-api:5.7.2.classpath"/>
+        <path refid="library.maven:_org.apiguardian:apiguardian-api:1.1.0.classpath"/>
+        <path refid="library.maven:_org.opentest4j:opentest4j:1.2.0.classpath"/>
+        <path refid="library.maven:_org.junit.platform:junit-platform-commons:1.7.2.classpath"/>
+    </path>
+
+
+    <patternset id="excluded.from.module.spring-boot-soap-getessjobstatus">
+        <patternset refid="ignored.files"/>
+    </patternset>
+
+    <patternset id="excluded.from.compilation.spring-boot-soap-getessjobstatus">
+        <patternset refid="excluded.from.module.spring-boot-soap-getessjobstatus"/>
+    </patternset>
+
+    <path id="spring-boot-soap-getessjobstatus.module.sourcepath">
+        <dirset dir="${module.spring-boot-soap-getessjobstatus.basedir}">
+            <include name="target/generated-sources/xjc"/>
+            <include name="src/main/java"/>
+            <include name="src/main/resources"/>
+        </dirset>
+    </path>
+
+    <path id="spring-boot-soap-getessjobstatus.module.test.sourcepath">
+        <dirset dir="${module.spring-boot-soap-getessjobstatus.basedir}">
+            <include name="src/test/java"/>
+        </dirset>
+    </path>
+
+
+    <target name="compile.module.spring-boot-soap-getessjobstatus"
+            depends="compile.module.spring-boot-soap-getessjobstatus.production,compile.module.spring-boot-soap-getessjobstatus.tests"
+            description="Compile module spring-boot-soap-getESSJobStatus"/>
+
+    <target name="compile.module.spring-boot-soap-getessjobstatus.production" depends="register.custom.compilers"
+            description="Compile module spring-boot-soap-getESSJobStatus; production classes">
+        <mkdir dir="${spring-boot-soap-getessjobstatus.output.dir}"/>
+        <javac2 destdir="${spring-boot-soap-getessjobstatus.output.dir}" debug="${compiler.debug}"
+                nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true"
+                executable="${module.jdk.bin.spring-boot-soap-getessjobstatus}/javac">
+            <compilerarg line="${compiler.args.spring-boot-soap-getessjobstatus}"/>
+            <bootclasspath refid="spring-boot-soap-getessjobstatus.module.bootclasspath"/>
+            <classpath refid="spring-boot-soap-getessjobstatus.module.production.classpath"/>
+            <src refid="spring-boot-soap-getessjobstatus.module.sourcepath"/>
+            <patternset refid="excluded.from.compilation.spring-boot-soap-getessjobstatus"/>
+        </javac2>
+
+        <copy todir="${spring-boot-soap-getessjobstatus.output.dir}">
+            <fileset dir="${module.spring-boot-soap-getessjobstatus.basedir}/target/generated-sources/xjc">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+            <fileset dir="${module.spring-boot-soap-getessjobstatus.basedir}/src/main/java">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+            <fileset dir="${module.spring-boot-soap-getessjobstatus.basedir}/src/main/resources">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="compile.module.spring-boot-soap-getessjobstatus.tests"
+            depends="register.custom.compilers,compile.module.spring-boot-soap-getessjobstatus.production"
+            description="compile module spring-boot-soap-getESSJobStatus; test classes" unless="skip.tests">
+        <mkdir dir="${spring-boot-soap-getessjobstatus.testoutput.dir}"/>
+        <javac2 destdir="${spring-boot-soap-getessjobstatus.testoutput.dir}" debug="${compiler.debug}"
+                nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true"
+                executable="${module.jdk.bin.spring-boot-soap-getessjobstatus}/javac">
+            <compilerarg line="${compiler.args.spring-boot-soap-getessjobstatus}"/>
+            <bootclasspath refid="spring-boot-soap-getessjobstatus.module.bootclasspath"/>
+            <classpath refid="spring-boot-soap-getessjobstatus.module.classpath"/>
+            <src refid="spring-boot-soap-getessjobstatus.module.test.sourcepath"/>
+            <patternset refid="excluded.from.compilation.spring-boot-soap-getessjobstatus"/>
+        </javac2>
+
+        <copy todir="${spring-boot-soap-getessjobstatus.testoutput.dir}">
+            <fileset dir="${module.spring-boot-soap-getessjobstatus.basedir}/src/test/java">
+                <patternset refid="compiler.resources"/>
+                <type type="file"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="clean.module.spring-boot-soap-getessjobstatus" description="cleanup module">
+        <delete dir="${spring-boot-soap-getessjobstatus.output.dir}"/>
+        <delete dir="${spring-boot-soap-getessjobstatus.testoutput.dir}"/>
+    </target>
+</project>
